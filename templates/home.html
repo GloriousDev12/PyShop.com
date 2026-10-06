@@ -1,0 +1,106 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="jumbotron text-center">
+  <h1 class="display-4">Welcome to PyShop</h1>
+  <p class="lead">Fresh fruits, great prices, delivered with convenience.</p>
+  <a href="/product/" class="btn btn-primary">Shop Now</a>
+</div>
+
+</div>
+
+
+<div class="container my-5">
+
+    <h2 class="text-center mb-4">Why Shop With Us?</h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-4">
+
+            <h4>🍎 Fresh Fruits</h4>
+
+            <p>
+                We provide fresh and quality fruits for you and your family.
+            </p>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <h4>💰 Great Prices</h4>
+
+            <p>
+                Get quality fruits at affordable and competitive prices.
+            </p>
+
+        </div>
+
+
+        <div class="col-md-4">
+
+            <h4>🚚 Convenient Shopping</h4>
+
+            <p>
+                Browse our products and shop conveniently from anywhere.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container my-5">
+
+    <h2 class="text-center mb-4">Featured Products</h2>
+
+    <div class="row">
+
+        {% for product in products %}
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card h-100">
+
+                <img
+                    src="{{ product.image_url }}"
+                    class="card-img-top"
+                    alt="{{ product.name }}"
+                >
+
+                <div class="card-body text-center">
+
+                    <h5 class="card-title">
+                        {{ product.name }}
+                    </h5>
+
+                    <p class="card-text">
+                        ${{ product.price }}
+                    </p>
+
+                    <a href="/product/" class="btn btn-primary">
+                        View Products
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+<div class="text-center my-4">
+
+    <a href="/product/" class="btn btn-primary btn-lg">
+        Shop All Products
+    </a>
+
+</div>
+
+{% endblock %}

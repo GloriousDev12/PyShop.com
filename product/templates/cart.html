@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container py-5 text-center">
+  <h1>Added to Cart</h1>
+
+  <h3 class="mt-4">{{ product.name }}</h3>
+
+  <p class="lead">Price: ${{ product.price }}</p>
+
+  <p>Your product has been selected successfully.</p>
+
+  <a href="/product/" class="btn btn-primary"> Continue Shopping </a>
+
+  <a href="/product/cart/" class="btn btn-success"> View Cart </a>
+</div>
+
+{% endblock %}

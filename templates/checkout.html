@@ -1,0 +1,80 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container py-5">
+  <h1 class="text-center mb-5">Checkout</h1>
+
+  {% if cart_items %}
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3 class="mb-4">Your Order</h3>
+
+          {% for item in cart_items %}
+
+          <div class="row align-items-center mb-4">
+            <div class="col-3">
+              <img
+                src="{{ item.product.image_url }}"
+                class="img-fluid"
+                alt="{{ item.product.name }}"
+              />
+            </div>
+
+            <div class="col-5">
+              <h5>{{ item.product.name }}</h5>
+
+              <p class="text-muted mb-0">Quantity: {{ item.quantity }}</p>
+            </div>
+
+            <div class="col-4 text-right">
+              <strong> ${{ item.subtotal }} </strong>
+            </div>
+          </div>
+
+          {% if not forloop.last %}
+          <hr />
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mt-4 mt-md-0">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3>Order Summary</h3>
+
+          <hr />
+
+          <p>
+            Items:
+            <strong> {{ cart_items|length }} </strong>
+          </p>
+
+          <h4>Total: ${{ total }}</h4>
+
+          <form method="POST">
+            {% csrf_token %}
+
+            <button type="submit" class="btn btn-success btn-block mt-4">
+              Place Order
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+
+  <div class="text-center">
+    <p class="lead">Your cart is empty.</p>
+
+    <a href="/product/" class="btn btn-primary"> Continue Shopping </a>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

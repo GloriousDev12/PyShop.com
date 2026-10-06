@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1>Order #{{ order.id }}</h1>
+
+      <p class="text-muted mb-0">
+        Placed on {{ order.created_at|date:"F d, Y" }}
+      </p>
+    </div>
+
+    <span class="badge badge-primary p-2">
+      {{ order.get_status_display }}
+    </span>
+  </div>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h3 class="mb-4">Order Items</h3>
+
+      {% for item in order.items.all %}
+
+      <div class="row align-items-center mb-4">
+        <div class="col-md-2">
+          <img
+            src="{{ item.product.image_url }}"
+            class="img-fluid rounded"
+            alt="{{ item.product.name }}"
+          />
+        </div>
+
+        <div class="col-md-5">
+          <h5>{{ item.product.name }}</h5>
+
+          <p class="text-muted mb-0">Quantity: {{ item.quantity }}</p>
+        </div>
+
+        <div class="col-md-2">
+          <p class="mb-0">Price: ${{ item.price }}</p>
+        </div>
+
+        <div class="col-md-3 text-md-right">
+          <strong>
+            <p class="mb-0 mt-1">
+              Subtotal: ${{ item.price|floatformat:2 }} × {{ item.quantity }}
+            </p>
+          </strong>
+
+          <p class="mb-0 mt-1">Subtotal: ${{ item.price|floatformat:2 }}</p>
+        </div>
+      </div>
+
+      {% if not forloop.last %}
+      <hr />
+      {% endif %} {% endfor %}
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="col-md-5">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h3>Order Summary</h3>
+
+          <hr />
+
+          <div class="d-flex justify-content-between">
+            <span> Total </span>
+
+            <strong> ${{ order.total|floatformat:2 }} </strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <a href="/order/history/" class="btn btn-outline-secondary">
+      Back to My Orders
+    </a>
+
+    <a href="/product/" class="btn btn-primary ml-2"> Continue Shopping </a>
+  </div>
+</div>
+
+{% endblock %}

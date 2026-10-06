@@ -1,0 +1,56 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container py-5">
+  <h1 class="text-center mb-5">My Account</h1>
+
+  <div class="row">
+    <!-- Profile Information -->
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h3 class="mb-4">Profile Information</h3>
+
+          <p>
+            <strong>Username:</strong>
+            {{ user.username }}
+          </p>
+
+          <p>
+            <strong>Email:</strong>
+            {{ user.email|default:"Not provided" }}
+          </p>
+
+          <a href="#" class="btn btn-primary mt-3"> Edit Profile </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h3 class="mb-4">Account</h3>
+
+          <a
+            href="/product/cart/"
+            class="btn btn-outline-primary btn-block mb-3"
+          >
+            View My Cart
+          </a>
+
+          <a
+            href="/order/history"
+            class="btn btn-outline-secondary btn-block mb-3"
+          >
+            My Orders
+          </a>
+
+          <a href="/accounts/logout/" class="btn btn-outline-danger btn-block">
+            Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

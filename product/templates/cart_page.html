@@ -1,0 +1,104 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container py-5">
+  <h1 class="text-center mb-5">Your Cart</h1>
+
+  {% if cart_items %} {% for item in cart_items %}
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <img
+            src="{{ item.product.image_url }}"
+            class="img-fluid"
+            alt="{{ item.product.name }}"
+          />
+        </div>
+
+        <div class="col-md-8">
+          <h3>{{ item.product.name }}</h3>
+
+          <p>Price per item: ${{ item.product.price }}</p>
+
+          <form
+            method="POST"
+            action="/product/cart/update/{{ item.product.id }}/"
+          >
+            {% csrf_token %}
+
+            <div class="form-group">
+              <label for="quantity-{{ item.product.id }}"> Quantity: </label>
+
+              <input
+                type="number"
+                name="quantity"
+                id="quantity-{{ item.product.id }}"
+                class="form-control"
+                min="1"
+                max="{{ item.product.stock }}"
+                value="{{ item.quantity }}"
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              Update Quantity
+            </button>
+          </form>
+
+          <p class="text-muted">
+            Remaining Stock:
+            <strong>{{ item.remaining_stock_quantity }}</strong>
+          </p>
+
+          <p>
+            Subtotal:
+            <strong>${{ item.subtotal }}</strong>
+          </p>
+
+          <a
+            href="/product/cart/remove/{{ item.product.id }}/"
+            class="btn btn-danger"
+          >
+            Remove from Cart
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+  <div class="card shadow-sm mt-5">
+    <div class="card-body">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <a href="/product/" class="btn btn-secondary"> Continue Shopping </a>
+        </div>
+
+        <div class="col-md-6 text-md-right mt-3 mt-md-0">
+          <p class="mb-1">
+            Subtotal:
+            <strong>${{ total }}</strong>
+          </p>
+
+          <h3>Cart Total: ${{ total }}</h3>
+
+          <a href="/order/checkout/" class="btn btn-success"> Proceed to Checkout </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% else %}
+
+  <div class="text-center">
+    <p class="lead">Your cart is currently empty.</p>
+
+    <a href="/product/" class="btn btn-primary"> Start Shopping </a>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

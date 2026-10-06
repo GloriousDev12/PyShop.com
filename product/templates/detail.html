@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-6">
+      <img
+        src="{{ product.image_url }}"
+        class="img-fluid"
+        alt="{{ product.name }}"
+      />
+    </div>
+
+    <div class="col-md-6">
+      <h1>{{ product.name }}</h1>
+      {% if error %}
+
+      <div class="alert alert-danger">{{ error }}</div>
+
+      {% endif %}
+      <h3>${{ product.price }}</h3>
+
+      <p class="text-muted">
+        Available Stock:
+        <strong>{{ remaining_stock }}</strong>
+      </p>
+
+      <p>Fresh and high-quality {{ product.name }} available at PyShop.</p>
+
+      {% if remaining_stock > 0 %}
+
+      <form method="POST" action="/product/cart/{{ product.id }}/">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="quantity"> Quantity </label>
+
+          <input
+            type="number"
+            name="quantity"
+            id="quantity"
+            class="form-control"
+            min="1"
+            max="{{ remaining_stock }}"
+            value="1"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add to Cart</button>
+      </form>
+
+      {% else %}
+
+      <div class="alert alert-danger">
+        This product is currently out of stock.
+      </div>
+
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
